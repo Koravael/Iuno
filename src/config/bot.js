@@ -25,7 +25,7 @@ export const botConfig = {
     activities: [
       {
         // Text users will see (example: "Playing /help | Titan Bot").
-        name: "your gacha news",
+        name: "your gacha news | W.I.P",
         // Activity type number (0 = Playing).
         type: 1, 
       },
