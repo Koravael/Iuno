@@ -1,4 +1,4 @@
-import { Events, MessageFlags } from 'discord.js';
+import { Events, MessageFlags, PermissionsBitField } from 'discord.js';
 import { logger } from '../utils/logger.js';
 import { getGuildConfig } from '../services/guildConfig.js';
 import { handleApplicationModal } from '../commands/Community/apply.js';
@@ -87,7 +87,23 @@ export default {
                 );
               }
             }
+const OWNER_ID = "1004818227211292743"; // <-- PUT YOUR DISCORD ID HERE
 
+import { PermissionsBitField } from 'discord.js';
+
+const isAdmin = interaction.member.permissions.has(
+  PermissionsBitField.Flags.Administrator
+);
+const isOwner = interaction.user.id === OWNER_ID;
+
+// Block non-admins/non-owner
+if (!isAdmin && !isOwner) {
+  return interaction.reply({
+    content: "You must be an admin or the bot owner to use this command.",
+    flags: MessageFlags.Ephemeral
+  });
+}
+// If allowed, run command
             await command.execute(interaction, guildConfig, client);
           } catch (error) {
             await handleInteractionError(interaction, error, withTraceContext({
